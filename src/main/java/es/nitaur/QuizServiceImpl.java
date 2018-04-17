@@ -77,6 +77,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.REPEATABLE_READ)
     public QuizQuestion answerQuestion(Long id, List<QuizAnswer> quizAnswers) {
         QuizQuestion questionToUpdate = quizQuestionRepository.findOne(id);
         if (questionToUpdate == null) {
