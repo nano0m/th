@@ -109,6 +109,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public List<QuizQuestion> updateQuestions(List<QuizQuestion> quizQuestions) {
         List<QuizQuestion> updatedQuestions = Lists.newArrayList();
         for (QuizQuestion quizQuestion : quizQuestions) {
