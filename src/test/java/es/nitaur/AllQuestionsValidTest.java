@@ -1,22 +1,21 @@
 package es.nitaur;
 
-import com.google.common.collect.Lists;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import com.google.common.collect.*;
+import es.nitaur.model.*;
+import org.junit.*;
+import org.junit.runner.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.context.embedded.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.boot.test.web.client.*;
+import org.springframework.core.*;
+import org.springframework.http.*;
+import org.springframework.test.context.junit4.*;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -33,45 +32,47 @@ public class AllQuestionsValidTest {
 
     @Test
     public void questionsAreNotSavedWithEmptyQuestionText() throws Exception {
-        QuizQuestion quizQuestion1 = new QuizQuestion();
-        quizQuestion1.setId(1L);
-        quizQuestion1.setQuestion("<<redacted>>");
+        QuizQuestion quiz_question_1 = new QuizQuestion();
+        quiz_question_1.setId(1L);
+        quiz_question_1.setQuestion("<<redacted>>");
 
-        QuizQuestion quizQuestion2 = new QuizQuestion();
-        quizQuestion2.setId(2L);
-        quizQuestion2.setQuestion(null);
+        QuizQuestion quiz_question_2 = new QuizQuestion();
+        quiz_question_2.setId(2L);
+        quiz_question_2.setQuestion(null);
 
-        List<QuizQuestion> questionsToUpdate = Lists.newArrayList(quizQuestion1, quizQuestion2);
+        List<QuizQuestion> questionsToUpdate = Lists.newArrayList(quiz_question_1, quiz_question_2);
 
-        restTemplate.postForLocation(UPDATE_QUESTION_API, questionsToUpdate);
+        this.restTemplate.postForLocation(UPDATE_QUESTION_API, questionsToUpdate);
 
-        ResponseEntity<List<QuizQuestion>> exchange = restTemplate.exchange(GET_ALL_QUESTIONS_API + "?filterSectionId=1", HttpMethod.GET, null, new ParameterizedTypeReference<List<QuizQuestion>>() {});
+        ResponseEntity<List<QuizQuestion>> exchange = this.restTemplate.exchange(GET_ALL_QUESTIONS_API + "?filterSectionId=1", HttpMethod.GET, null, new ParameterizedTypeReference<List<QuizQuestion>>() {
+        });
         List<QuizQuestion> body = exchange.getBody();
 
-        for (QuizQuestion quizQuestion : body) {
-            assertThat("Question text should not be <<redacted>>", "<<redacted>>", not(quizQuestion.getQuestion()));
+        for (QuizQuestion question : body) {
+            assertThat("Question text should not be <<redacted>>", "<<redacted>>", not(question.getQuestion()));
         }
     }
 
     @Test
     public void questionsAreSavedWithQuestionText() throws Exception {
-        QuizQuestion quizQuestion3 = new QuizQuestion();
-        quizQuestion3.setId(3L);
-        quizQuestion3.setQuestion("<<redacted>>");
+        QuizQuestion quiz_question_3 = new QuizQuestion();
+        quiz_question_3.setId(3L);
+        quiz_question_3.setQuestion("<<redacted>>");
 
-        QuizQuestion quizQuestion4 = new QuizQuestion();
-        quizQuestion4.setId(4L);
-        quizQuestion4.setQuestion("<<redacted>>");
+        QuizQuestion quiz_question_4 = new QuizQuestion();
+        quiz_question_4.setId(4L);
+        quiz_question_4.setQuestion("<<redacted>>");
 
-        List<QuizQuestion> questionsToUpdate = Lists.newArrayList(quizQuestion3, quizQuestion4);
+        List<QuizQuestion> questionsToUpdate = Lists.newArrayList(quiz_question_3, quiz_question_4);
 
-        restTemplate.postForLocation(UPDATE_QUESTION_API, questionsToUpdate);
+        this.restTemplate.postForLocation(UPDATE_QUESTION_API, questionsToUpdate);
 
-        ResponseEntity<List<QuizQuestion>> exchange = restTemplate.exchange(GET_ALL_QUESTIONS_API + "?filterSectionId=2", HttpMethod.GET, null, new ParameterizedTypeReference<List<QuizQuestion>>() {});
+        ResponseEntity<List<QuizQuestion>> exchange = this.restTemplate.exchange(GET_ALL_QUESTIONS_API + "?filterSectionId=2", HttpMethod.GET, null, new ParameterizedTypeReference<List<QuizQuestion>>() {
+        });
         List<QuizQuestion> body = exchange.getBody();
 
-        for (QuizQuestion quizQuestion : body) {
-            assertThat("Question text is only <<redacted>>", "<<redacted>>", is(quizQuestion.getQuestion()));
+        for (QuizQuestion question : body) {
+            assertThat("Question text is only <<redacted>>", "<<redacted>>", is(question.getQuestion()));
         }
     }
 }

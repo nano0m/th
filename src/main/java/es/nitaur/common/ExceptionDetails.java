@@ -1,4 +1,4 @@
-package es.nitaur;
+package es.nitaur.common;
 
 public class ExceptionDetails {
 
@@ -15,7 +15,7 @@ public class ExceptionDetails {
     }
 
     public long getTimestamp() {
-        return timestamp;
+        return this.timestamp;
     }
 
     public void setTimestamp(final long timestamp) {
@@ -23,7 +23,7 @@ public class ExceptionDetails {
     }
 
     public String getMethod() {
-        return method;
+        return this.method;
     }
 
     public void setMethod(final String method) {
@@ -31,7 +31,7 @@ public class ExceptionDetails {
     }
 
     public String getPath() {
-        return path;
+        return this.path;
     }
 
     public void setPath(final String path) {
@@ -39,7 +39,7 @@ public class ExceptionDetails {
     }
 
     public int getStatus() {
-        return status;
+        return this.status;
     }
 
     public void setStatus(final int status) {
@@ -47,7 +47,7 @@ public class ExceptionDetails {
     }
 
     public String getStatusText() {
-        return statusText;
+        return this.statusText;
     }
 
     public void setStatusText(final String statusText) {
@@ -55,7 +55,7 @@ public class ExceptionDetails {
     }
 
     public String getExceptionClass() {
-        return exceptionClass;
+        return this.exceptionClass;
     }
 
     public void setExceptionClass(final String exceptionClass) {
@@ -63,11 +63,10 @@ public class ExceptionDetails {
     }
 
     public String getExceptionMessage() {
-        return exceptionMessage;
+        return this.exceptionMessage;
     }
 
     public void setExceptionMessage(final String exceptionMessage) {
         this.exceptionMessage = exceptionMessage;
     }
-
 }

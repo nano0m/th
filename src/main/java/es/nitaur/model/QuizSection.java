@@ -1,17 +1,16 @@
-package es.nitaur;
+package es.nitaur.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "QUIZ_SECTION")
 public class QuizSection extends GenericEntity {
-
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -152967961913880574L;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "section_fk")
@@ -23,19 +22,19 @@ public class QuizSection extends GenericEntity {
     private Quiz quiz;
 
     public List<QuizQuestion> getQuizQuestions() {
-        return quizQuestions;
+        return this.quizQuestions;
     }
 
-    public void setQuizQuestions(List<QuizQuestion> quizQuestions) {
-        this.quizQuestions = quizQuestions;
+    public void setQuizQuestions(List<QuizQuestion> questions) {
+        this.quizQuestions = questions;
     }
 
     @JsonIgnore
     public Quiz getQuiz() {
-        return quiz;
+        return this.quiz;
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+    public void setQuiz(Quiz questionQuiz) {
+        this.quiz = questionQuiz;
     }
 }

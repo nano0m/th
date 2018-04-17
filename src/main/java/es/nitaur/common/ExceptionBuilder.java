@@ -1,9 +1,7 @@
-package es.nitaur;
+package es.nitaur.common;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
-
+import org.springframework.web.context.request.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,7 +21,7 @@ public class ExceptionBuilder {
      * Constructs a new ExceptionDetailBuilder.
      */
     public ExceptionBuilder() {
-        exceptionDetails = new ExceptionDetails();
+        this.exceptionDetails = new ExceptionDetails();
     }
 
     /**
@@ -32,7 +30,7 @@ public class ExceptionBuilder {
      * @return An ExceptionDetail object.
      */
     public ExceptionDetails build() {
-        return exceptionDetails;
+        return this.exceptionDetails;
     }
 
     /**
@@ -44,8 +42,8 @@ public class ExceptionBuilder {
      */
     public ExceptionBuilder exception(final Exception ex) {
         if (ex != null) {
-            exceptionDetails.setExceptionClass(ex.getClass().getName());
-            exceptionDetails.setExceptionMessage(ex.getMessage());
+            this.exceptionDetails.setExceptionClass(ex.getClass().getName());
+            this.exceptionDetails.setExceptionMessage(ex.getMessage());
         }
         return this;
     }
@@ -59,8 +57,8 @@ public class ExceptionBuilder {
      */
     public ExceptionBuilder httpStatus(final HttpStatus status) {
         if (status != null) {
-            exceptionDetails.setStatus(status.value());
-            exceptionDetails.setStatusText(status.getReasonPhrase());
+            this.exceptionDetails.setStatus(status.value());
+            this.exceptionDetails.setStatusText(status.getReasonPhrase());
         }
         return this;
     }
@@ -90,10 +88,9 @@ public class ExceptionBuilder {
      */
     public ExceptionBuilder httpServletRequest(final HttpServletRequest request) {
         if (request != null) {
-            exceptionDetails.setMethod(request.getMethod());
-            exceptionDetails.setPath(request.getServletPath());
+            this.exceptionDetails.setMethod(request.getMethod());
+            this.exceptionDetails.setPath(request.getServletPath());
         }
         return this;
     }
-
 }

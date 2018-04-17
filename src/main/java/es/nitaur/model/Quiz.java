@@ -1,17 +1,15 @@
-package es.nitaur;
+package es.nitaur.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import javax.validation.constraints.*;
+import java.util.*;
 
 @Entity
 @Table(name = "QUIZ")
 public class Quiz extends GenericEntity {
-
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8140813951014053993L;
 
     @NotNull
     private String name;
@@ -22,18 +20,18 @@ public class Quiz extends GenericEntity {
     private List<QuizSection> sections;
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public List<QuizSection> getSections() {
-        return sections;
+        return this.sections;
     }
 
-    public void setSections(List<QuizSection> sections) {
-        this.sections = sections;
+    public void setSections(List<QuizSection> quizSections) {
+        this.sections = quizSections;
     }
 }

@@ -1,16 +1,12 @@
 package es.nitaur;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.springframework.http.HttpStatus;
-
-import java.io.IOException;
-import java.net.URI;
+import org.apache.http.client.methods.*;
+import org.apache.http.client.utils.*;
+import org.apache.http.entity.*;
+import org.apache.http.impl.client.*;
+import org.springframework.http.*;
+import java.io.*;
+import java.net.*;
 
 public class HttpPostRunnable implements Runnable {
 
@@ -33,17 +29,17 @@ public class HttpPostRunnable implements Runnable {
             URI uri = new URIBuilder()
                     .setScheme(HTTP)
                     .setHost(LOCALHOST)
-                    .setPort(port)
+                    .setPort(this.port)
                     .setPath(ANSWER_QUESTION_API_FIRST_QUESTION)
                     .build();
 
             HttpPost post = new HttpPost(uri);
             post.setHeader("Content-type", "application/json");
-            post.setEntity(new StringEntity("[{\"answer\":\"Test " + idx + "\"}, {\"answer\": \"TEST " + idx + "\"}]"));
+            post.setEntity(new StringEntity("[{\"answer\":\"Test " + this.idx + "\"}, {\"answer\": \"TEST " + this.idx + "\"}]"));
 
-            System.out.println("Executing request # " + idx + post.getRequestLine());
+            System.out.println("Executing request # " + this.idx + post.getRequestLine());
 
-            executeRequest(post, 1);
+            this.executeRequest(post, 1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,17 +48,15 @@ public class HttpPostRunnable implements Runnable {
     }
 
     private void executeRequest(HttpPost post, int retryIdx) throws IOException, InterruptedException {
-        if (retryIdx > MAX_RETRIES) {
-            return;
-        }
+        if (retryIdx < MAX_RETRIES) {
+            CloseableHttpClient http_client = HttpClients.createDefault();
+            CloseableHttpResponse response = http_client.execute(post);
 
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        CloseableHttpResponse response = httpclient.execute(post);
-        if (HttpStatus.INTERNAL_SERVER_ERROR.value() == response.getStatusLine().getStatusCode()) {
-            System.out.println("Call failed, re-executing request # " + idx + post.getRequestLine());
-            Thread.sleep(100);
-            executeRequest(post, retryIdx++);
+            if (HttpStatus.INTERNAL_SERVER_ERROR.value() == response.getStatusLine().getStatusCode()) {
+                System.out.println("Call failed, re-executing request # " + this.idx + post.getRequestLine());
+                Thread.sleep(100);
+                executeRequest(post, retryIdx++);
+            }
         }
     }
-
 }

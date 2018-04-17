@@ -1,21 +1,18 @@
-package es.nitaur;
+package es.nitaur.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import java.io.Serializable;
+import javax.persistence.*;
+import java.io.*;
 
 @MappedSuperclass
 public class GenericEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3771817657702120569L;
 
     @Id
     @GeneratedValue
     private Long id;
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(final Long id) {
@@ -25,16 +22,15 @@ public class GenericEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (null == o || !this.getClass().equals(o.getClass())) return false;
 
         GenericEntity that = (GenericEntity) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        return null != this.getId() ? this.getId().equals(that.getId()) : null == that.getId();
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return null != this.getId() ? this.getId().hashCode() : 0;
     }
-
 }

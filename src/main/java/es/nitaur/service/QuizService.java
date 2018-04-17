@@ -1,7 +1,7 @@
-package es.nitaur;
+package es.nitaur.service;
 
-import java.util.Collection;
-import java.util.List;
+import es.nitaur.model.*;
+import java.util.*;
 
 public interface QuizService {
 

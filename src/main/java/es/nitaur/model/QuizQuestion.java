@@ -1,6 +1,6 @@
-package es.nitaur;
+package es.nitaur.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -10,8 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "QUIZ_QUESTION")
 public class QuizQuestion extends GenericEntity {
-
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4600054923903723308L;
 
     private String question;
 
@@ -28,35 +27,35 @@ public class QuizQuestion extends GenericEntity {
     private QuizSection section;
 
     public String getQuestion() {
-        return question;
+        return this.question;
     }
 
-    public void setQuestion(String question) {
+    public void setQuestion(final String question) {
         this.question = question;
     }
 
     public List<QuizAnswer> getAnswers() {
-        return answers;
+        return this.answers;
     }
 
-    public void setAnswers(List<QuizAnswer> answers) {
-        this.answers = answers;
+    public void setAnswers(List<QuizAnswer> quizAnswers) {
+        this.answers = quizAnswers;
     }
 
     @JsonIgnore
     public QuizSection getSection() {
-        return section;
+        return this.section;
     }
 
-    public void setSection(QuizSection section) {
-        this.section = section;
+    public void setSection(QuizSection quizSection) {
+        this.section = quizSection;
     }
 
     public Long getUpdateCount() {
-        return updateCount;
+        return this.updateCount;
     }
 
-    public void setUpdateCount(Long updateCount) {
+    public void setUpdateCount(final Long updateCount) {
         this.updateCount = updateCount;
     }
 }
